@@ -1,61 +1,50 @@
-# 🛠️ DropleTorrent
+#!/bin/bash
 
-DropleTorrent es un script sencillo para levantar un droplet en DigitalOcean (o VPS similar), instalar `qbittorrent-nox`, descargar un torrent sin bloqueos del ISP, y luego empaquetarlo para bajarlo rápidamente.
+# dropletorrent.sh
+# 🌀 Script para armar un entorno exprés de descarga torrent usando un droplet temporal
+# Requiere: Ubuntu (con acceso root)
 
-Ideal para quienes:
-- Tienen bloqueos de torrents en casa (como con Totalplay, Telmex, etc).
-- Quieren descargar contenido en el celular sin usar apps p2p.
-- Necesitan una solución rápida y descartable.
+# ★ INICIO DE INSTALACIÓN
+clear
+echo "\n\n**************************************"
+echo "🌐 Iniciando instalación de paquetes..."
+echo "**************************************\n"
 
----
+# 1. Actualiza paquetes
+apt update && apt upgrade -y
 
-## ⚡️ Beneficios
+# 2. Instala herramientas necesarias
+apt install -y qbittorrent-nox zip ufw python3
 
-- No requiere mantener servidores activos.
-- No deja rastros en tu red local.
-- Evita throttling o censura de torrents.
-- Es barato: puedes usar droplets por hora y destruir al terminar.
+# 3. Abre puertos necesarios
+ufw allow 8080  # Web UI de qBittorrent
+ufw allow 9000  # Servidor HTTP para bajar el archivo final
+ufw --force enable
 
----
+# ★ FIN DE INSTALACIÓN
+clear
+echo "\n\n**************************************"
+echo "🚀 Instalación completada. Lanzando qBittorrent..."
+echo "**************************************\n"
 
-## 🔄 Flujo de trabajo
+# 4. Lanza qBittorrent en segundo plano usando nohup y guarda log
+nohup qbittorrent-nox > /root/qbt.log 2>&1 &
+sleep 3  # da tiempo para generar el password
 
-1. **Lanza tu droplet Ubuntu** (por ejemplo, en DigitalOcean).
-2. **Conéctate como root y ejecuta el script**:
+# 5. Muestra acceso a Web UI y credenciales
+IP=$(curl -s ifconfig.me)
+PASSWORD=$(grep -oP 'Password set to: \K.*' /root/qbt.log)
 
-   ```bash
-   curl -O https://raw.githubusercontent.com/is-ma/dropletorrent/main/dropletorrent.sh
-   bash dropletorrent.sh
-   ```
-
-3. **Accede a la interfaz web de qBittorrent** y pega tu .torrent o magnet link.
-
-4. **Cuando termine de bajar**, sigue las instrucciones que el script te da para empaquetar el contenido y descargarlo vía HTTP desde tu navegador o celular.
-
-5. **Borra tu droplet**. ✅
-
----
-
-## 📅 Casos de uso
-
-- Cursos online (videos, PDFs, audios)
-- Packs de libros o música
-- Archivos grandes compartidos en torrents públicos
-
----
-
-## 👻 Advertencia amistosa
-
-Este script está pensado para uso personal y legal. No fomenta ni apoya la piratería de contenido con derechos de autor.
-
----
-
-## 🚀 Contribuciones
-
-Ideas, mejoras y forks son bienvenidos. Puedes sugerir integraciones con Docker, versión con interfaz, sistema de notificaciones, etc.
-
----
-
-Happy torrenting, 
-**- El equipo invisible de DropleTorrent 🌌**
+echo "\n\n🚀 Todo listo."
+echo "🔍 Web UI: http://$IP:8080"
+echo "🔑 Usuario: admin"
+echo "🔑 Contraseña: ${PASSWORD:-(no encontrada, revisa /root/qbt.log)}"
+echo "\n💼 Cuando termine de descargar tu torrent, empaqueta así:"
+echo "    cd ~/Downloads"
+echo "    zip -r -0 \"nombre_del_curso.zip\" \"Carpeta_del_curso\""
+echo "\n📦 Luego sirve tu archivo con:"
+echo "    python3 -m http.server 9000"
+echo "\n📱 Y descárgalo desde tu navegador en:"
+echo "    http://$IP:9000/"
+echo "\n🚨 Recuerda: borra tu droplet una vez que hayas descargado el archivo.\n"
 
