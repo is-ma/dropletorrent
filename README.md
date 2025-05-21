@@ -14,7 +14,7 @@ Ideal para quienes:
 - No requiere mantener servidores activos.
 - No deja rastros en tu red local.
 - Evita throttling o censura de torrents.
-- Es barato: puedes usar droplets por hora y destruir al terminar (≈ $0.009 USD/hora).
+- Es barato: puedes usar droplets por hora y destruir al terminar (aprox. $0.009 USD/hora).
 
 ---
 
@@ -24,6 +24,6 @@ Ideal para quienes:
 2. **Conéctate como root y ejecuta el script**:
 
    ```bash
-   curl -O https://raw.githubusercontent.com/is-ma/dropletorrent/refs/heads/main/dropletorrent.sh
+   curl -O https://raw.githubusercontent.com/is-ma/dropletorrent/main/dropletorrent.sh
    bash dropletorrent.sh
 
