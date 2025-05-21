@@ -1,7 +1,13 @@
+
+---
+
+### ⚙️ `dropletorrent.sh`
+
+```bash
 #!/bin/bash
 
 # dropletorrent.sh
-# 🌀 Script para armar un entorno exprés de descarga torrent usando un droplet temporal
+# 🌐 Script para armar un entorno exprés de descarga torrent usando un droplet temporal
 # Requiere: Ubuntu (con acceso root)
 
 # ★ INICIO DE INSTALACIÓN
