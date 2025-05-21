@@ -37,7 +37,7 @@ sleep 3  # da tiempo para generar el password
 
 # 5. Muestra acceso a Web UI y credenciales
 IP=$(curl -s ifconfig.me)
-PASSWORD=$(grep -oP 'Password set to: \K.*' /root/qbt.log)
+PASSWORD=$(grep -oP 'temporary password is provided for this session: \K.*' /root/qbt.log)
 
 echo ""
 echo "🚀 Todo listo."
