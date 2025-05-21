@@ -24,6 +24,6 @@ Ideal para quienes:
 2. **Conéctate como root y ejecuta el script**:
 
    ```bash
-   curl -O https://raw.githubusercontent.com/is-ma/dropletorrent/main/dropletorrent.sh
+   curl -O https://raw.githubusercontent.com/is-ma/dropletorrent/refs/heads/main/dropletorrent.sh
    bash dropletorrent.sh
 
