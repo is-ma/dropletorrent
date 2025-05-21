@@ -1,9 +1,3 @@
-
----
-
-### ⚙️ `dropletorrent.sh`
-
-```bash
 #!/bin/bash
 
 # dropletorrent.sh
@@ -12,9 +6,11 @@
 
 # ★ INICIO DE INSTALACIÓN
 clear
-echo "\n\n**************************************"
+echo ""
+echo "**************************************"
 echo "🌐 Iniciando instalación de paquetes..."
-echo "**************************************\n"
+echo "**************************************"
+echo ""
 
 # 1. Actualiza paquetes
 apt update && apt upgrade -y
@@ -29,9 +25,11 @@ ufw --force enable
 
 # ★ FIN DE INSTALACIÓN
 clear
-echo "\n\n**************************************"
+echo ""
+echo "**************************************"
 echo "🚀 Instalación completada. Lanzando qBittorrent..."
-echo "**************************************\n"
+echo "**************************************"
+echo ""
 
 # 4. Lanza qBittorrent en segundo plano usando nohup y guarda log
 nohup qbittorrent-nox > /root/qbt.log 2>&1 &
@@ -41,16 +39,22 @@ sleep 3  # da tiempo para generar el password
 IP=$(curl -s ifconfig.me)
 PASSWORD=$(grep -oP 'Password set to: \K.*' /root/qbt.log)
 
-echo "\n\n🚀 Todo listo."
+echo ""
+echo "🚀 Todo listo."
 echo "🔍 Web UI: http://$IP:8080"
 echo "🔑 Usuario: admin"
 echo "🔑 Contraseña: ${PASSWORD:-(no encontrada, revisa /root/qbt.log)}"
-echo "\n💼 Cuando termine de descargar tu torrent, empaqueta así:"
+echo ""
+echo "💼 Cuando termine de descargar tu torrent, empaqueta así:"
 echo "    cd ~/Downloads"
 echo "    zip -r -0 \"nombre_del_curso.zip\" \"Carpeta_del_curso\""
-echo "\n📦 Luego sirve tu archivo con:"
+echo ""
+echo "📦 Luego sirve tu archivo con:"
 echo "    python3 -m http.server 9000"
-echo "\n📱 Y descárgalo desde tu navegador en:"
+echo ""
+echo "📱 Y descárgalo desde tu navegador en:"
 echo "    http://$IP:9000/"
-echo "\n🚨 Recuerda: borra tu droplet una vez que hayas descargado el archivo.\n"
+echo ""
+echo "🚨 Recuerda: borra tu droplet una vez que hayas descargado el archivo."
+echo ""
 
